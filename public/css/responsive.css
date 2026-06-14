@@ -1,0 +1,383 @@
+/* ===================== RESPONSIVE DESIGN ===================== */
+
+/* Tablets y pantallas medianas (768px y menos) */
+@media (max-width: 768px) {
+    .navbar__container {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .navbar__logo h1 {
+        font-size: 20px;
+    }
+
+    .nav-menu-desktop {
+        display: none;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .nav-menu {
+        top: 60px;
+    }
+
+    .product-detail {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .carrito-content {
+        grid-template-columns: 1fr;
+    }
+
+    .carrito-summary {
+        position: static;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px;
+    }
+
+    .product-image {
+        height: 200px;
+    }
+
+    .main-title {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .auth-container {
+        margin: 30px 15px;
+        padding: 20px;
+    }
+
+    .checkout-actions {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+    .admin-table {
+        font-size: 12px;
+    }
+
+    .admin-table th,
+    .admin-table td {
+        padding: 10px;
+    }
+}
+
+/* Móviles (480px y menos) */
+@media (max-width: 480px) {
+    .navbar__container {
+        padding: 12px 15px;
+    }
+
+    .navbar__logo h1 {
+        font-size: 18px;
+    }
+
+    .hamburger-line {
+        width: 20px;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 10px;
+    }
+
+    .product-card {
+        border-radius: 4px;
+    }
+
+    .product-image {
+        height: 150px;
+        font-size: 36px;
+    }
+
+    .product-info {
+        padding: 10px;
+    }
+
+    .product-title {
+        font-size: 14px;
+        margin-bottom: 6px;
+    }
+
+    .product-price {
+        font-size: 16px;
+    }
+
+    .product-actions {
+        gap: 5px;
+    }
+
+    .product-actions button {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+
+    .main-title {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+
+    .btn {
+        padding: 10px 15px;
+        font-size: 13px;
+    }
+
+    .btn-back {
+        margin-bottom: 15px;
+    }
+
+    .product-detail-image {
+        height: 300px;
+        font-size: 80px;
+    }
+
+    .product-detail-info h1 {
+        font-size: 22px;
+    }
+
+    .product-detail-info .price {
+        font-size: 24px;
+    }
+
+    .quantity-selector input {
+        width: 50px;
+        padding: 6px;
+        font-size: 12px;
+    }
+
+    .quantity-selector button {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+
+    .carrito-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .item-total {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .total-price {
+        font-size: 16px;
+    }
+
+    .btn-remove {
+        padding: 6px 10px;
+        font-size: 11px;
+    }
+
+    .carrito-summary {
+        padding: 15px;
+    }
+
+    .carrito-summary h2 {
+        font-size: 16px;
+    }
+
+    .total {
+        font-size: 16px;
+    }
+
+    .auth-container {
+        margin: 20px 10px;
+        padding: 15px;
+    }
+
+    .auth-container h1 {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        gap: 8px;
+    }
+
+    .form-group label {
+        font-size: 13px;
+    }
+
+    .form-group input {
+        padding: 8px;
+        font-size: 13px;
+    }
+
+    .auth-link {
+        font-size: 12px;
+        margin-top: 12px;
+    }
+
+    .checkout-item {
+        font-size: 14px;
+    }
+
+    .checkout-total {
+        font-size: 16px;
+    }
+
+    .order-card {
+        padding: 15px;
+    }
+
+    .order-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .order-id {
+        font-size: 14px;
+    }
+
+    .order-item {
+        font-size: 13px;
+    }
+
+    .order-total {
+        font-size: 14px;
+    }
+
+    .admin-form {
+        padding: 15px;
+    }
+
+    .admin-table {
+        font-size: 11px;
+    }
+
+    .admin-table th,
+    .admin-table td {
+        padding: 8px;
+    }
+
+    .admin-actions {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .admin-actions button {
+        padding: 5px 8px;
+        font-size: 11px;
+        width: 100%;
+    }
+
+    .user-info-desktop {
+        display: none;
+    }
+
+    .nav-menu-list li {
+        padding: 10px 15px;
+    }
+
+    .user-info {
+        padding: 12px 15px !important;
+    }
+
+    .container {
+        padding: 0 15px;
+    }
+
+    #content {
+        padding: 15px 0;
+    }
+
+    .empty-cart {
+        padding: 40px 15px;
+    }
+
+    .empty-cart h2 {
+        font-size: 20px;
+    }
+
+    .alert {
+        padding: 12px;
+        font-size: 13px;
+    }
+
+    .spinner {
+        width: 30px;
+        height: 30px;
+    }
+
+    .cart-count {
+        width: 18px;
+        height: 18px;
+        font-size: 11px;
+    }
+
+    .cart-widget {
+        font-size: 18px;
+    }
+
+    .no-auth,
+    .no-orders {
+        padding: 40px 15px;
+    }
+
+    .footer-content {
+        font-size: 12px;
+    }
+}
+
+/* Extra pequeño (pantallas muy estrechas, 360px) */
+@media (max-width: 360px) {
+    .navbar__logo h1 {
+        font-size: 16px;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .product-title {
+        font-size: 12px;
+    }
+
+    .product-price {
+        font-size: 14px;
+    }
+
+    .product-image {
+        height: 120px;
+        font-size: 32px;
+    }
+
+    .main-title {
+        font-size: 18px;
+    }
+
+    .btn {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+
+    .auth-container {
+        margin: 15px 8px;
+        padding: 12px;
+    }
+
+    .auth-container h1 {
+        font-size: 18px;
+    }
+
+    .form-group input {
+        font-size: 12px;
+    }
+}
