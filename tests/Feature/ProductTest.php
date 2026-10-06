@@ -84,7 +84,6 @@ class ProductTest extends TestCase
                 'category' => 'Electronics',
                 'price' => 99.99,
                 'stock' => 50,
-                'image' => 'product.jpg',
             ]);
 
         $response->assertStatus(201)

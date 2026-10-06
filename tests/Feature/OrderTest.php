@@ -88,13 +88,15 @@ class OrderTest extends TestCase
             ->postJson('/api/ordenes', [
                 'items' => [
                     [
-                        'product_id' => $products[0]->id,
-                        'quantity' => 2,
+                        'id' => $products[0]->id,
+                        'titulo' => $products[0]->titulo,
+                        'cantidad' => 2,
                         'price' => $products[0]->price,
                     ],
                     [
-                        'product_id' => $products[1]->id,
-                        'quantity' => 1,
+                        'id' => $products[1]->id,
+                        'titulo' => $products[1]->titulo,
+                        'cantidad' => 1,
                         'price' => $products[1]->price,
                     ]
                 ],
@@ -163,7 +165,7 @@ class OrderTest extends TestCase
         ]);
 
         $response = $this->actingAs($admin, 'sanctum')
-            ->putJson("/api/ordenes/{$order->id}/approve");
+            ->putJson("/api/ordenes/{$order->id}/status", ['status' => 'approved']);
 
         $response->assertStatus(200);
 
@@ -182,7 +184,7 @@ class OrderTest extends TestCase
         $order = Order::factory()->create(['status' => 'pending']);
 
         $response = $this->actingAs($user, 'sanctum')
-            ->putJson("/api/ordenes/{$order->id}/approve");
+            ->putJson("/api/ordenes/{$order->id}/status", ['status' => 'approved']);
 
         $response->assertStatus(403);
     }

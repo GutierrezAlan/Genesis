@@ -13,15 +13,20 @@ class AdminUserSeeder extends Seeder
      */
     public function run(): void
     {
-        // Crear usuario admin
-        $admin = User::updateOrCreate(
-            ['email' => 'admin@genesis.com'],
+        $email = env('ADMIN_EMAIL', app()->isProduction() ? null : 'admin@genesis.com');
+        $password = env('ADMIN_PASSWORD', app()->isProduction() ? null : 'admin123');
+
+        if (blank($email) || blank($password)) {
+            throw new \RuntimeException('Define ADMIN_EMAIL y ADMIN_PASSWORD antes de crear el administrador.');
+        }
+
+        $admin = User::firstOrCreate(
+            ['email' => $email],
             [
                 'name' => 'Administrador',
                 'first_name' => 'Admin',
                 'last_name' => 'Genesis',
-                'email' => 'admin@genesis.com',
-                'password' => Hash::make('admin123'),
+                'password' => Hash::make($password),
             ]
         );
 
@@ -35,7 +40,6 @@ class AdminUserSeeder extends Seeder
             $this->command->warn('⚠️  Usuario admin creado pero sin rol asignado (rol no existe)');
         }
         
-        $this->command->line('   Email: admin@genesis.com');
-        $this->command->line('   Contraseña: admin123');
+        $this->command->line('   Email: '.$email);
     }
 }

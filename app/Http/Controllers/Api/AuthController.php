@@ -74,9 +74,10 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['Las credenciales proporcionadas son incorrectas.'],
-            ]);
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Las credenciales proporcionadas son incorrectas.',
+            ], 401);
         }
 
         // Determinar el nombre del token según "remember"
@@ -118,7 +119,8 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         // Eliminar el token actual
-        $request->user()->currentAccessToken()->delete();
+        $token = $request->user()->currentAccessToken();
+        $token?->delete();
 
         return response()->json([
             'status' => 'success',

@@ -16,21 +16,37 @@ class CategoryController extends Controller
      */
     public function search(Request $request)
     {
+        $filters = $request->validate([
+            'category' => 'sometimes|string|max:100',
+            'titulo' => 'sometimes|string|max:255',
+            'min_price' => 'sometimes|numeric|min:0',
+            'max_price' => 'sometimes|numeric|min:0|gte:min_price',
+        ]);
+
         try {
-            $category = $request->input('category');
-            
-            // Validación: la categoría es requerida
-            if (!$category) {
+            if ($filters === []) {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'La categoría es requerida'
+                    'message' => 'Debes indicar al menos un filtro',
                 ], 400);
             }
 
-            // Buscar productos por el nombre de categoría (campo text original)
-            // o por la relación con Category si usa category_id
-            $productos = Product::where('category',$category)
-                ->get();
+            $query = Product::query();
+
+            if (isset($filters['category'])) {
+                $query->where('category', $filters['category']);
+            }
+            if (isset($filters['titulo'])) {
+                $query->where('titulo', 'like', '%'.$filters['titulo'].'%');
+            }
+            if (isset($filters['min_price'])) {
+                $query->where('price', '>=', $filters['min_price']);
+            }
+            if (isset($filters['max_price'])) {
+                $query->where('price', '<=', $filters['max_price']);
+            }
+
+            $productos = $query->get();
 
             // Si no encuentra, retornar array vacío
             if ($productos->isEmpty()) {

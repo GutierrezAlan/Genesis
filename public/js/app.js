@@ -310,7 +310,7 @@ class App {
 
     async updateOrderStatus(orderId, newStatus) {
         try {
-            response = await api.updateOrderStatus(Number(orderId), newStatus);
+            const response = await api.updateOrderStatus(Number(orderId), newStatus);
             Utils.showNotification(response.data.message || 'Estado de orden actualizado', 'success');
             await Pages.loadAdminOrders();
         } catch (error) {
@@ -325,7 +325,7 @@ class App {
         if (!confirm('¿Eliminar esta orden? Esta acción no se puede deshacer.')) return;
 
         try {
-            await api.updateOrderStatus(orderId);
+            await api.deleteOrder(orderId);
             Utils.showNotification('Orden eliminada', 'success');
 
             // Refrescar solo la sección de órdenes

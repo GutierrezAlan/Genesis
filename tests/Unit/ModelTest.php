@@ -6,6 +6,7 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\Order;
+use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ModelTest extends TestCase
@@ -28,6 +29,7 @@ class ModelTest extends TestCase
      */
     public function test_user_can_have_roles()
     {
+        $this->seed(RoleSeeder::class);
         $user = User::factory()->create();
         $user->assignRole('admin');
 
@@ -57,10 +59,14 @@ class ModelTest extends TestCase
      */
     public function test_product_default_stock()
     {
-        $product = Product::factory()->create([
-            'stock' => null,
+        $product = Product::query()->create([
+            'titulo' => 'Test Product',
+            'description' => 'Test description',
+            'category' => 'Test',
+            'price' => 10,
         ]);
 
+        $product->refresh();
         $this->assertEquals(10, $product->stock);
     }
 

@@ -5,7 +5,7 @@
 
 class APIClient {
     constructor() {
-        this.baseURL = 'http://127.0.0.1:8000/api';
+        this.baseURL = '/api';
         this.token = Utils.getFromStorage('auth_token');
     }
 
@@ -269,7 +269,10 @@ class APIClient {
         console.log(`Actualizando orden ${id} a estado: ${status}`);
         
         return this.put(`/ordenes/${id}/status`, {status});
-        
+    }
+
+    async deleteOrder(id) {
+        return this.delete(`/ordenes/${id}`);
     }
 
     // ============ IMÁGENES ENDPOINTS ============

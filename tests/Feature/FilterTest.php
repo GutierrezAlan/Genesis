@@ -40,15 +40,8 @@ class FilterTest extends TestCase
         $response = $this->getJson('/api/categorias');
 
         $response->assertStatus(200)
-            ->assertJsonStructure([
-                'status',
-                'data' => [
-                    '*' => [
-                        'id',
-                        'name',
-                    ]
-                ]
-            ]);
+            ->assertJsonPath('status', 'success')
+            ->assertJsonPath('data', ['Electronics', 'Clothing', 'Books']);
     }
 
     /**

@@ -11,6 +11,7 @@ use App\Http\Controllers\CategoryController;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/buscar', [CategoryController::class, 'search']);
+Route::get('/categorias', [CategoryController::class, 'obtenerCategorias']);
 
 // Route::get('/productos/buscar', [ProductController::class, 'buscar']);
 Route::resource('productos', ProductController::class)->only(['index', 'show', 'search']);
@@ -51,7 +52,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
 
     // Órdenes
-    Route::resource('ordenes', OrderController::class)->only(['index', 'store', 'show']);
+    Route::resource('ordenes', OrderController::class)
+        ->only(['index', 'store', 'show'])
+        ->parameters(['ordenes' => 'order']);
+    Route::put('/ordenes/{order}/cancel', [OrderController::class, 'cancel']);
 
     // Solo Admin
     Route::middleware(['role:admin'])->group(function () {
@@ -60,6 +64,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         
         // Órdenes - Solo admin puede aprobar/cancelar/eliminar 
         Route::put('/ordenes/{order}/status', [OrderController::class, 'updateOrderStatus']);
+        Route::delete('/ordenes/{order}', [OrderController::class, 'delete']);
 
         // Admin Dashboard
         Route::get('/admin/dashboard', function () {

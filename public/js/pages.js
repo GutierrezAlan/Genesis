@@ -362,7 +362,7 @@ class Pages {
                         <div class="admin-orders-filters">
                             <button class="admin-filter-btn active" data-status="all"    onclick="Pages.filterAdminOrders('all')">Todas</button>
                             <button class="admin-filter-btn"        data-status="pending"    onclick="Pages.filterAdminOrders('pending')">Pendientes</button>
-                            <button class="admin-filter-btn"        data-status="completed"  onclick="Pages.filterAdminOrders('completed')">Completadas</button>
+                            <button class="admin-filter-btn"        data-status="approved"  onclick="Pages.filterAdminOrders('approved')">Aprobadas</button>
                         </div>
                     </div>
                     <div id="ordersList"></div>
@@ -499,8 +499,8 @@ class Pages {
                     <span class="admin-order-total">Total: <strong>${Utils.formatMoney(order.total_price)}</strong></span>
                     <div class="admin-order-actions">
                         ${Status == 'pending' ? `
-                            <button class="btn btn-success" onclick="app.updateOrderStatus(${order.id}, 'completed')">
-                                ✓ Marcar completada
+                            <button class="btn btn-success" onclick="app.updateOrderStatus(${order.id}, 'approved')">
+                                ✓ Aprobar pedido
                             </button>
                         ` : `
                             <button class="btn btn-secondary" onclick="app.updateOrderStatus(${order.id}, 'pending')">
@@ -508,7 +508,7 @@ class Pages {
                             </button>
                         `}
                         ${Status == 'cancelled' ?`
-                        <button class="btn btn-danger" onclick="app.updateOrderStatus(${order.id}, 'deleted')">
+                        <button class="btn btn-danger" onclick="app.deleteOrder(${order.id})">
                         🗑 Eliminar
                         </button>
                         `:`

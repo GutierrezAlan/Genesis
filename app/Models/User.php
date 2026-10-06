@@ -7,6 +7,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 use App\Notifications\CustomVerifyEmailNotification;
 use App\Notifications\ResetPasswordNotification;
@@ -17,6 +18,8 @@ class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable,HasApiTokens,HasRoles;
+
+    protected string $guard_name = 'web';
 
     /**
      * The attributes that are mass assignable.
@@ -58,6 +61,11 @@ class User extends Authenticatable
 
     public function disolayInfo():string{
         return "User: {$this->name} , Email:{$this->email}";
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
     }
 
     // public function SendPasswordResetNotification($token)

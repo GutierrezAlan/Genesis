@@ -131,53 +131,24 @@ class OrderController extends Controller
 
     public function updateOrderStatus(Order $order, Request $request)
     {
-    // 1. Validar que el status sea uno permitido
-    $request->validate([
-        'status' => 'required|in:completed,cancelled,deleted'
-    ]);
+        $validated = $request->validate([
+            'status' => 'required|in:pending,approved,cancelled',
+        ]);
 
-    $newStatus = $request->status;
+        $order->update(['status' => $validated['status']]);
 
-    // 2. Lógica adicional según el nuevo estado (opcional)
-    try {
-        switch ($newStatus) {
-            case 'completed':
-                // Podrías agregar lógica de aprobación (stock, validaciones)
-                $order->update(['status' => 'completed']);
-                $message = 'Pedido aprobado exitosamente';
-                break;
-            case 'cancelled':
-                $order->update(['status' => 'cancelled']);
-                $message = 'Pedido cancelado';
-                // Aquí podrías liberar stock, etc.
-                break;
-            case 'pending':
-                $order->update(['status' => 'pending']);
-                $message = 'Pedido pendiente';
-                // Aquí podrías liberar stock, etc.
-                break;
-            case 'deleted':
-                // Si quieres borrado lógico (mantener en BD pero no mostrarlo)
-                // $order->update(['status' => 'deleted']);
-                // O si prefieres borrado físico:
-                $order->delete();
-                $message = 'Pedido eliminado';
-                break;
-        }
+        $message = match ($validated['status']) {
+            'approved' => 'Pedido aprobado exitosamente',
+            'cancelled' => 'Pedido cancelado',
+            default => 'Pedido pendiente',
+        };
 
         return response()->json([
             'status' => 'success',
             'message' => $message,
             'data' => $order
         ]);
-    } catch (\Exception $e) {
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Error al actualizar el pedido',
-            'error' => $e->getMessage()
-        ], 500);
     }
-}
 
     /**
      * Cancel an order (Admin or owner)
@@ -193,6 +164,13 @@ class OrderController extends Controller
                     'status' => 'error',
                     'message' => 'No tienes permiso para cancelar este pedido'
                 ], 403);
+            }
+
+            if ($order->status !== 'pending') {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Solo se pueden cancelar pedidos pendientes',
+                ], 400);
             }
 
             $order->update(['status' => 'cancelled']);

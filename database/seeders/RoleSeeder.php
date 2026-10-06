@@ -14,10 +14,6 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        if (Role::count() > 2) {
-            return;
-        }
-
          // Resetear caché de roles y permisos
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 

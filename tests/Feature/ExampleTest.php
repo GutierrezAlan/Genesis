@@ -8,7 +8,7 @@ use App\Models\Product;
 use App\Models\Order;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class IntegrationTest extends TestCase
+class ExampleTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -20,6 +20,8 @@ class IntegrationTest extends TestCase
         // Register new user
         $registerResponse = $this->postJson('/api/register', [
             'name' => 'John Doe',
+            'first_name' => 'John',
+            'last_name' => 'Doe',
             'email' => 'john@example.com',
             'password' => 'password123',
             'password_confirmation' => 'password123',
@@ -46,9 +48,9 @@ class IntegrationTest extends TestCase
 
         $profileResponse->assertStatus(200)
             ->assertJson([
-                'data' => [
+                'data' => ['user' => [
                     'email' => 'john@example.com',
-                ]
+                ]]
             ]);
     }
 
@@ -68,13 +70,15 @@ class IntegrationTest extends TestCase
             ->postJson('/api/ordenes', [
                 'items' => [
                     [
-                        'product_id' => $products[0]->id,
-                        'quantity' => 2,
+                        'id' => $products[0]->id,
+                        'titulo' => $products[0]->titulo,
+                        'cantidad' => 2,
                         'price' => $products[0]->price,
                     ],
                     [
-                        'product_id' => $products[1]->id,
-                        'quantity' => 1,
+                        'id' => $products[1]->id,
+                        'titulo' => $products[1]->titulo,
+                        'cantidad' => 1,
                         'price' => $products[1]->price,
                     ]
                 ],
@@ -102,7 +106,7 @@ class IntegrationTest extends TestCase
         $admin->assignRole('admin');
 
         $approveResponse = $this->actingAs($admin, 'sanctum')
-            ->putJson("/api/ordenes/{$orderId}/approve");
+            ->putJson("/api/ordenes/{$orderId}/status", ['status' => 'approved']);
 
         $approveResponse->assertStatus(200);
 
@@ -134,7 +138,6 @@ class IntegrationTest extends TestCase
                 'category' => 'Electronics',
                 'price' => 99.99,
                 'stock' => 50,
-                'image' => 'product.jpg',
             ]);
 
         $createResponse->assertStatus(201);

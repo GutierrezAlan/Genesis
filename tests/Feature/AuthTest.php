@@ -17,6 +17,8 @@ class AuthTest extends TestCase
     {
         $response = $this->postJson('/api/register', [
             'name' => 'John Doe',
+            'first_name' => 'John',
+            'last_name' => 'Doe',
             'email' => 'john@example.com',
             'password' => 'password123',
             'password_confirmation' => 'password123',
@@ -26,11 +28,11 @@ class AuthTest extends TestCase
             ->assertJsonStructure([
                 'status',
                 'message',
-                'data' => [
+                'data' => ['user' => [
                     'id',
                     'name',
                     'email',
-                ]
+                ]]
             ]);
 
         $this->assertDatabaseHas('users', [
@@ -146,9 +148,11 @@ class AuthTest extends TestCase
             ->assertJsonStructure([
                 'status',
                 'data' => [
-                    'id',
-                    'name',
-                    'email',
+                    'user' => [
+                        'id',
+                        'name',
+                        'email',
+                    ],
                 ]
             ]);
     }
