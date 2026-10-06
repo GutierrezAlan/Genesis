@@ -76,7 +76,7 @@ class Components {
                 items.push({
                     type: 'button',
                     label: `🛒 Carrito (${cart.getTotalQuantity()})`,
-                    action: 'app.router.navigate("/carrito")',
+                    action: "app.router.navigate('/carrito')",
                     mobileOnly: false,
                 });
             }

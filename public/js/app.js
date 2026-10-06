@@ -55,6 +55,7 @@ class App {
             onEnter: () => this.pages.renderCart(),
         });
 
+
         router.register('/checkout', {
             page: 'checkout',
             onEnter: () => this.pages.renderCheckout(),
